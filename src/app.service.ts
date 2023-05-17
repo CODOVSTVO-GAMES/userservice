@@ -73,6 +73,8 @@ export class AppService {
     async userLogic(dataDTO: DataDTO): Promise<ResonseUseraDTO> {
         const userId = dataDTO.userId;
 
+        if (userId == undefined || userId == null) { console.log('userId :' + userId); return new ResonseUseraDTO('', [''], 'ban', false) }
+
         const users = await this.findUserByUserId(userId)
 
         let user: User
