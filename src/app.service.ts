@@ -4,7 +4,7 @@ import { ResponseDTO } from './DTO/ResponseDTO';
 import { DataDTO } from './DTO/DataDTO';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ResonseDataDTO } from './DTO/ResponseDataDTO';
+import { ResonseUseraDTO } from './DTO/ResponseUserDTO';
 import * as crypto from 'crypto';
 import { User } from './models/User';
 
@@ -45,7 +45,7 @@ export class AppService {
         return responseDTO
     }
 
-    async userHandler(data: any): Promise<ResonseDataDTO> {
+    async userHandler(data: any): Promise<ResonseUseraDTO> {
         let requestDTO;
         try {
             requestDTO = new RequestDTO(data.data, data.serverHash)
@@ -61,7 +61,7 @@ export class AppService {
         let dataDTO
         try {
             const obj = JSON.parse(JSON.stringify(requestDTO.data))
-            dataDTO = new DataDTO(obj.userId, obj.sessionHash, obj.sessionId)
+            dataDTO = new DataDTO(obj.userId)
         } catch (e) {
             throw "parsing data error"
         }
@@ -70,7 +70,7 @@ export class AppService {
     }
 
 
-    async userLogic(dataDTO: DataDTO): Promise<ResonseDataDTO> {
+    async userLogic(dataDTO: DataDTO): Promise<ResonseUseraDTO> {
         const userId = dataDTO.userId;
 
         console.log(userId)
@@ -93,7 +93,7 @@ export class AppService {
             user = await this.createUserByUserId(userId)
         }
 
-        return new ResonseDataDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission)
+        return new ResonseUseraDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission)
     }
 
     parseAccountsId(strIds: string): Array<string> {

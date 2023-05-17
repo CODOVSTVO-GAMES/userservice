@@ -1,7 +1,8 @@
 export class DataDTO {
     userId: string;
     //любые полученые данные
-    constructor(userId: string, sessionHash: string, sessionId: number) {
+    
+    constructor(userId: string) {
         this.userId = userId
     }
 }

@@ -1,4 +1,4 @@
-export class ResonseDataDTO {
+export class ResonseUseraDTO {
     userId: string
     accountsId: Array<string>
     permission: string
