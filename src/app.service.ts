@@ -73,15 +73,10 @@ export class AppService {
     async userLogic(dataDTO: DataDTO): Promise<ResonseUseraDTO> {
         const userId = dataDTO.userId;
 
-        console.log(userId)
-
-        //запросить юзеров по айди
-        // if user is empty then create a new
-        // if user then update last active return user
-
         const users = await this.findUserByUserId(userId)
 
         let user: User
+        let isNewUser = false
 
         if (users.length > 0) {
             if (users.length > 1) {
@@ -91,9 +86,10 @@ export class AppService {
             user = users[0]
         } else {
             user = await this.createUserByUserId(userId)
+            isNewUser = true
         }
 
-        return new ResonseUseraDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission)
+        return new ResonseUseraDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission, isNewUser)
     }
 
     parseAccountsId(strIds: string): Array<string> {
