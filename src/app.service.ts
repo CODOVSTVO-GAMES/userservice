@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { RequestDTO } from './DTO/RequestDTO';
 import { ResponseDTO } from './DTO/ResponseDTO';
 import { DataDTO } from './DTO/DataDTO';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -46,21 +45,9 @@ export class AppService {
     }
 
     async userHandler(data: any): Promise<ResonseUseraDTO> {
-        let requestDTO;
-        try {
-            requestDTO = new RequestDTO(data.data, data.serverHash)
-        } catch (e) {
-            console.log("server DTO bad")
-            throw "server DTO bad"
-        }
-
-        if (this.isServerHashBad(requestDTO.serverHash)) {
-            throw "server hash bad"
-        }
-
         let dataDTO
         try {
-            const obj = JSON.parse(JSON.stringify(requestDTO.data))
+            const obj = JSON.parse(data)
             dataDTO = new DataDTO(obj.userId)
         } catch (e) {
             throw "parsing data error"
@@ -101,7 +88,7 @@ export class AppService {
     }
 
     async createUserByUserId(userId: string) {
-        const user = this.userRepo.save(
+        const user = await this.userRepo.save(
             this.userRepo.create(
                 {
                     userId: userId,
@@ -116,7 +103,7 @@ export class AppService {
     }
 
     async findUserByUserId(userId: string) {
-        return this.userRepo.find(
+        return await this.userRepo.find(
             {
                 where: {
                     userId: userId
@@ -129,13 +116,6 @@ export class AppService {
         user.lastActive = Date.now()
         await this.userRepo.save(user)
         return user
-    }
-
-    isServerHashBad(serverHash: string): boolean {
-        if (serverHash == '89969458273-the-main-prize-in-the-show-psychics') {
-            return false
-        }
-        return true
     }
 }
 
