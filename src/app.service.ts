@@ -48,8 +48,8 @@ export class AppService {
         let dataDTO
         console.log(data)
         try {
-            const obj = JSON.parse(data)
-            dataDTO = new DataDTO(obj.userId)
+            // const obj = JSON.parse(data)
+            dataDTO = new DataDTO(data.userId)
         } catch (e) {
             throw "parsing data error"
         }
