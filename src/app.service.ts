@@ -46,6 +46,7 @@ export class AppService {
 
     async userHandler(data: any): Promise<ResonseUseraDTO> {
         let dataDTO
+        console.log(data)
         try {
             const obj = JSON.parse(data)
             dataDTO = new DataDTO(obj.userId)
