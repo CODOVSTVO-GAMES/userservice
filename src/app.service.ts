@@ -40,6 +40,7 @@ export class AppService {
             console.log("Ошибка " + e)
         }
         responseDTO.status = status
+        console.log(status)
 
         return responseDTO
     }
@@ -82,7 +83,6 @@ export class AppService {
 
     parseAccountsId(strIds: string): Array<string> {
         const array = strIds.split(',')
-        console.log(array)
         return array
     }
 
