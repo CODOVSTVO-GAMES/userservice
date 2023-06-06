@@ -4,7 +4,6 @@ import { DataDTO } from './DTO/DataDTO';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ResonseUseraDTO } from './DTO/ResponseUserDTO';
-import * as crypto from 'crypto';
 import { User } from './models/User';
 
 
@@ -48,7 +47,7 @@ export class AppService {
     async userLogic(dataDTO: DataDTO): Promise<ResonseUseraDTO> {
         const userId = dataDTO.userId;
 
-        if (userId == undefined || userId == null) { console.log('userId :' + userId); return new ResonseUseraDTO('', [''], 'ban', false) }
+        if (userId == undefined || userId == null) { console.log('userId :' + userId); throw 403 }
 
         const users = await this.findUserByUserId(userId)
 
@@ -82,7 +81,8 @@ export class AppService {
                     createDate: Date.now(),
                     lastActive: Date.now(),
                     permission: 'user',
-                    accountsId: '1,'
+                    accountsId: '1,',
+                    zoneId: 'testzone'
                 }
             )
         )

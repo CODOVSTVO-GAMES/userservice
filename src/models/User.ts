@@ -14,6 +14,9 @@ export class User {
     @Column()
     permission: string
 
+    @Column()
+    zoneId: string
+
     @Column({ type: "bigint" })
     lastActive: number
 
