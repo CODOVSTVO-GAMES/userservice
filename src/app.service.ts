@@ -65,7 +65,7 @@ export class AppService {
             isNewUser = true
         }
 
-        return new ResonseUseraDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission, isNewUser)
+        return new ResonseUseraDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission, isNewUser, user.zoneId)
     }
 
     parseAccountsId(strIds: string): Array<string> {
