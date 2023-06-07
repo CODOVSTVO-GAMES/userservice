@@ -11,4 +11,10 @@ export class AppController {
     async getHello(data: any): Promise<ResponseDTO> {
         return await this.appService.userResponser(data)
     }
+
+    @EventPattern('change_chunk')
+    async changeChunk(data: any) {
+        console.log(data)
+    }
+
 }
