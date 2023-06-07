@@ -17,6 +17,9 @@ export class User {
     @Column()
     zoneId: string
 
+    @Column()
+    chunk: string
+
     @Column({ type: "bigint" })
     lastActive: number
 
