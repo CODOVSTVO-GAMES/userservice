@@ -82,7 +82,7 @@ export class AppService {
                     lastActive: Date.now(),
                     permission: 'user',
                     accountsId: '1,',
-                    coordinates: 'testzone:none,'
+                    coordinates: 'testzone:none-'
                 }
             )
         )
@@ -125,20 +125,74 @@ export class AppService {
 
     async chandeShunkLogic(data: any) {
         let accountId = ''
-        let chunk = ''
+        let coordinates = ''
         try {
             accountId = data.accountId
-            chunk = data.chunk
+            coordinates = data.coordinates
         } catch (e) {
             throw "parsing data error"
         }
 
-        if (accountId == undefined || accountId == 'undefined' || chunk == undefined || chunk == 'undefined') {
+        if (accountId == undefined || accountId == 'undefined' || coordinates == undefined || coordinates == 'undefined') {
             console.log('Пришли пустые значения')
             return
         }
 
+        const users = await this.findUserByUserId(this.getUserIdFromAccountId(accountId))
+        const account = this.getAccount(accountId)
 
+        const accounts: string[] = this.convertAccountsStringToArray(users[0].accountsId)
+        const coordinatesArr: string[] = this.convertCoordinatesStringToArray(users[0].coordinates)
+
+        for (let l = 0; l < accounts.length; l++) {
+            if (accounts[l] == account) {
+                const coords = coordinatesArr[l]
+                const zone = this.parseZone(coords)
+                if (zone == this.parseZone(coordinates)) {
+                    const newCoord = this.parseCoordinates(coordinates)
+                    coordinatesArr[l] = zone + ':' + newCoord
+                    users[0].accountsId = this.convertCoordinatesArrayToString(coordinatesArr)
+                    await this.userRepo.save(users[0])
+                    return
+                } else {
+                    console.log("зона аккаунта не соответствует зоне изменения координат")
+                    //log
+                    return
+                }
+            }
+        }
+    }
+
+    convertAccountsStringToArray(str: string): string[] {
+        return str.split(',')
+    }
+
+    convertCoordinatesStringToArray(str: string): string[] {
+        return str.split('-')
+    }
+
+    convertCoordinatesArrayToString(arr: string[]): string {
+        let str = ''
+        for (let l = 0; l < arr.length; l++) {
+            str = str + arr[l] + '-'
+        }
+        return str
+    }
+
+    parseZone(str: string): string {
+        return str.split(':')[0]
+    }
+
+    parseCoordinates(str: string): string {
+        return str.split(':')[1]
+    }
+
+    getUserIdFromAccountId(accountId: string): string {
+        return accountId.split('-')[0]
+    }
+
+    getAccount(account: string): string {
+        return account.split('-')[1]
     }
 
 

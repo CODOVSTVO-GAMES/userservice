@@ -14,7 +14,7 @@ export class AppController {
 
     @EventPattern('change_chunk')
     async changeChunk(data: any) {
-        console.log(data)
+        this.appService.chandeShunkResponser(data)
     }
 
 }
