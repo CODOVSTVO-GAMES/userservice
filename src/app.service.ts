@@ -153,6 +153,7 @@ export class AppService {
                     coordinatesArr[l] = zone + ':' + newCoord
                     users[0].accountsId = this.convertCoordinatesArrayToString(coordinatesArr)
                     await this.userRepo.save(users[0])
+                    console.log("зона изменена")
                     return
                 } else {
                     console.log("зона аккаунта не соответствует зоне изменения координат")
