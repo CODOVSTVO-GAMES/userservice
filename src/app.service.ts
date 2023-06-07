@@ -151,6 +151,7 @@ export class AppService {
                 if (zone == this.parseZone(coordinates)) {
                     const newCoord = this.parseCoordinates(coordinates)
                     coordinatesArr[l] = zone + ':' + newCoord
+                    console.log(coordinatesArr)
                     users[0].coordinates = this.convertCoordinatesArrayToString(coordinatesArr)
                     await this.userRepo.save(users[0])
                     console.log("зона изменена")
