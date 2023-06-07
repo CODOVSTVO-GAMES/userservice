@@ -176,6 +176,7 @@ export class AppService {
     convertCoordinatesArrayToString(arr: string[]): string {
         let str = ''
         for (let l = 0; l < arr.length; l++) {
+            if (arr[l] == '') { continue; }
             str = str + arr[l] + '-'
         }
         return str
