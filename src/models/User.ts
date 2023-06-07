@@ -15,10 +15,7 @@ export class User {
     permission: string
 
     @Column()
-    zoneId: string
-
-    @Column()
-    chunk: string
+    coordinates: string //[zoneid:chunk, zoneid:chunk]
 
     @Column({ type: "bigint" })
     lastActive: number

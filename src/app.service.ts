@@ -65,7 +65,7 @@ export class AppService {
             isNewUser = true
         }
 
-        return new ResonseUseraDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission, isNewUser, user.zoneId, user.chunk)
+        return new ResonseUseraDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission, isNewUser, user.coordinates)
     }
 
     parseAccountsId(strIds: string): Array<string> {
@@ -82,8 +82,7 @@ export class AppService {
                     lastActive: Date.now(),
                     permission: 'user',
                     accountsId: '1,',
-                    zoneId: 'testzone',
-                    chunk: 'none'
+                    coordinates: 'testzone:none,'
                 }
             )
         )
@@ -105,6 +104,44 @@ export class AppService {
         await this.userRepo.save(user)
         return user
     }
+
+    //---------------------------------------
+
+
+    async chandeShunkResponser(data: any) {
+        const responseDTO = new ResponseDTO()
+        let status = 200
+        try {
+            await this.chandeShunkLogic(data)
+        }
+        catch (e) {
+            status = 400
+            console.log("Ошибка " + e)
+        }
+        responseDTO.status = status
+
+        return responseDTO
+    }
+
+    async chandeShunkLogic(data: any) {
+        let accountId = ''
+        let chunk = ''
+        try {
+            accountId = data.accountId
+            chunk = data.chunk
+        } catch (e) {
+            throw "parsing data error"
+        }
+
+        if (accountId == undefined || accountId == 'undefined' || chunk == undefined || chunk == 'undefined') {
+            console.log('Пришли пустые значения')
+            return
+        }
+
+
+    }
+
+
 }
 
 

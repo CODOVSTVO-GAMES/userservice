@@ -3,15 +3,13 @@ export class ResonseUseraDTO {
     accountsId: Array<string>
     permission: string
     isNewUser: boolean
-    zoneId: string
-    chunk: string
+    coordinates: string
 
-    constructor(userId: string, accountsId: Array<string>, permission: string, isNewUser: boolean, zoneId: string, chunk: string) {
+    constructor(userId: string, accountsId: Array<string>, permission: string, isNewUser: boolean, coordinates: string) {
         this.userId = userId
         this.accountsId = accountsId
         this.permission = permission
         this.isNewUser = isNewUser
-        this.zoneId = zoneId
-        this.chunk = chunk
+        this.coordinates = coordinates
     }
 }
