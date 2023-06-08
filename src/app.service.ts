@@ -65,7 +65,7 @@ export class AppService {
             isNewUser = true
         }
 
-        return new ResonseUseraDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission, isNewUser, user.coordinates)
+        return new ResonseUseraDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission, isNewUser, user.zone)
     }
 
     parseAccountsId(strIds: string): Array<string> {
@@ -82,7 +82,7 @@ export class AppService {
                     lastActive: Date.now(),
                     permission: 'user',
                     accountsId: '1,',
-                    coordinates: 'testzone:none-'
+                    zone: 'testzone-'
                 }
             )
         )
@@ -108,63 +108,6 @@ export class AppService {
     //---------------------------------------
 
 
-    async chandeShunkResponser(data: any) {
-        const responseDTO = new ResponseDTO()
-        let status = 200
-        try {
-            await this.chandeShunkLogic(data)
-        }
-        catch (e) {
-            status = 400
-            console.log("Ошибка " + e)
-        }
-        responseDTO.status = status
-
-        return responseDTO
-    }
-
-    async chandeShunkLogic(data: any) {
-        let accountId = ''
-        let coordinates = ''
-        try {
-            accountId = data.accountId
-            coordinates = data.coordinates
-        } catch (e) {
-            throw "parsing data error"
-        }
-
-        if (accountId == undefined || accountId == 'undefined' || coordinates == undefined || coordinates == 'undefined') {
-            console.log('Пришли пустые значения')
-            return
-        }
-
-        const users = await this.findUserByUserId(this.getUserIdFromAccountId(accountId))
-        const account = this.getAccount(accountId)
-
-        const accounts: string[] = this.convertAccountsStringToArray(users[0].accountsId)
-        const coordinatesArr: string[] = this.convertCoordinatesStringToArray(users[0].coordinates)
-
-        for (let l = 0; l < accounts.length; l++) {
-            if (accounts[l] == account) {
-                const coords = coordinatesArr[l]
-                const zone = this.parseZone(coords)
-                if (zone == this.parseZone(coordinates)) {
-                    const newCoord = this.parseCoordinates(coordinates)
-                    coordinatesArr[l] = zone + ':' + newCoord
-                    console.log(coordinatesArr)
-                    users[0].coordinates = this.convertCoordinatesArrayToString(coordinatesArr)
-                    await this.userRepo.save(users[0])
-                    console.log("зона изменена")
-                    return
-                } else {
-                    console.log("зона аккаунта не соответствует зоне изменения координат")
-                    //log
-                    return
-                }
-            }
-        }
-    }
-
     convertAccountsStringToArray(str: string): string[] {
         return str.split(',')
     }
@@ -181,24 +124,6 @@ export class AppService {
         }
         return str
     }
-
-    parseZone(str: string): string {
-        return str.split(':')[0]
-    }
-
-    parseCoordinates(str: string): string {
-        return str.split(':')[1]
-    }
-
-    getUserIdFromAccountId(accountId: string): string {
-        return accountId.split('-')[0]
-    }
-
-    getAccount(account: string): string {
-        return account.split('-')[1]
-    }
-
-
 }
 
 
