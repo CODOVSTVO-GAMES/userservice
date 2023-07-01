@@ -18,41 +18,26 @@ export class AppService {
 
     async userResponser(data: any) {
         const responseDTO = new ResponseDTO()
-        let status = 200
         try {
-            const resonseDataDTO = await this.userHandler(data)
-            responseDTO.data = resonseDataDTO
+            const dataDTO = new DataDTO(data.userId)
+            responseDTO.data = await this.userLogic(dataDTO)
         }
         catch (e) {
-            status = 400
+            responseDTO.status = 400
             console.log("Ошибка " + e)
         }
-        responseDTO.status = status
 
         return responseDTO
     }
 
-    async userHandler(data: any): Promise<ResonseUseraDTO> {
-        let dataDTO
-        try {
-            dataDTO = new DataDTO(data.userId)
-        } catch (e) {
-            throw "parsing data error"
-        }
-
-        return this.userLogic(dataDTO)
-    }
-
-
     async userLogic(dataDTO: DataDTO): Promise<ResonseUseraDTO> {
         const userId = dataDTO.userId;
-
         if (userId == undefined || userId == null) { console.log('userId :' + userId); throw 403 }
-
-        const users = await this.findUserByUserId(userId)
 
         let user: User
         let isNewUser = false
+
+        const users = await this.findUserByUserId(userId)
 
         if (users.length > 0) {
             if (users.length > 1) {
