@@ -50,6 +50,10 @@ export class AppService {
             isNewUser = true
         }
 
+        if (userId == 'web') {
+            isNewUser = true //тестовый юзер 
+        }
+
         return new ResonseUseraDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission, isNewUser, user.zone)
     }
 
@@ -90,25 +94,6 @@ export class AppService {
         return user
     }
 
-    //---------------------------------------
-
-
-    convertAccountsStringToArray(str: string): string[] {
-        return str.split(',')
-    }
-
-    convertCoordinatesStringToArray(str: string): string[] {
-        return str.split('-')
-    }
-
-    convertCoordinatesArrayToString(arr: string[]): string {
-        let str = ''
-        for (let l = 0; l < arr.length; l++) {
-            if (arr[l] == '') { continue; }
-            str = str + arr[l] + '-'
-        }
-        return str
-    }
 }
 
 
