@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { Injectable } from '@nestjs/common';
 import { ResponseDTO } from './DTO/ResponseDTO';
 import { DataDTO } from './DTO/DataDTO';
@@ -54,7 +55,7 @@ export class AppService {
             isNewUser = true //тестовый юзер 
         }
 
-        return new ResonseUseraDTO(user.userId, this.parseAccountsId(user.accountsId), user.permission, isNewUser, user.zone)
+        return new ResonseUseraDTO(user.userId, user.accounts, user.permission, isNewUser)
     }
 
     parseAccountsId(strIds: string): Array<string> {
@@ -70,8 +71,7 @@ export class AppService {
                     createDate: Date.now(),
                     lastActive: Date.now(),
                     permission: 'user',
-                    accountsId: '1,',
-                    zone: 'testzone-'
+                    accounts: JSON.parse(JSON.stringify(new Account('1', 'testzone')))
                 }
             )
         )
@@ -96,4 +96,11 @@ export class AppService {
 
 }
 
-
+export class Account {
+    userName: string
+    zone: string
+    constructor(
+        userName: string,
+        zone: string
+    ) { }
+}

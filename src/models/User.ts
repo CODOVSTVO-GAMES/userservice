@@ -1,3 +1,4 @@
+import { Account } from 'src/app.service';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -9,17 +10,14 @@ export class User {
     userId: string
 
     @Column()
-    accountsId: string
-
-    @Column()
     permission: string
-
-    @Column()
-    zone: string
 
     @Column({ type: "bigint" })
     lastActive: number
 
     @Column({ type: "bigint" })
     createDate: number
+
+    @Column({ nullable: true, type: 'json' })
+    accounts: Account[]
 }

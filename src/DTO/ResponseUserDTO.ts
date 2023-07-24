@@ -1,15 +1,15 @@
+import { Account } from "src/app.service"
+
 export class ResonseUseraDTO {
     userId: string
-    accountsId: Array<string>
+    accounts: Account[]
     permission: string
     isNewUser: boolean
-    zone: string
 
-    constructor(userId: string, accountsId: Array<string>, permission: string, isNewUser: boolean, zone: string) {
+    constructor(userId: string, accounts: Account[], permission: string, isNewUser: boolean) {
         this.userId = userId
-        this.accountsId = accountsId
         this.permission = permission
         this.isNewUser = isNewUser
-        this.zone = zone
+        this.accounts = accounts
     }
 }
