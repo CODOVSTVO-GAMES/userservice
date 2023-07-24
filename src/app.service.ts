@@ -64,6 +64,9 @@ export class AppService {
     }
 
     async createUserByUserId(userId: string) {
+        const accounts: Account[] = []
+        accounts.push(new Account('1', 'testzone'))
+
         const user = await this.userRepo.save(
             this.userRepo.create(
                 {
@@ -71,7 +74,7 @@ export class AppService {
                     createDate: Date.now(),
                     lastActive: Date.now(),
                     permission: 'user',
-                    accounts: JSON.parse(JSON.stringify(new Account('1', 'testzone')))
+                    accounts: JSON.parse(JSON.stringify(accounts))
                 }
             )
         )
