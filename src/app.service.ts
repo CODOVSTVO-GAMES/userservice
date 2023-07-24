@@ -54,7 +54,7 @@ export class AppService {
         if (userId == 'web') {
             isNewUser = true //тестовый юзер 
         }
-
+        console.log(user)
         return new ResonseUseraDTO(user.userId, user.accounts, user.permission, isNewUser)
     }
 
@@ -105,5 +105,8 @@ export class Account {
     constructor(
         userName: string,
         zone: string
-    ) { }
+    ) {
+        this.userName = userName
+        this.zone = zone
+    }
 }
