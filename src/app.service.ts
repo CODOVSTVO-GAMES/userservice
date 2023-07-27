@@ -51,7 +51,7 @@ export class AppService {
             isNewUser = true
         }
 
-        if (userId == 'web') {
+        if (userId == 'web' || userId == '580946266481') {
             isNewUser = true //тестовый юзер 
         }
         console.log(user)
