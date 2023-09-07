@@ -1,4 +1,4 @@
-name: Docker Image CI
+entsname: Docker Image CI
 
 on:
   push:
@@ -22,4 +22,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: keshox/user:${{github.run_number}}
+          tags: keshox/events:${{github.run_number}}
