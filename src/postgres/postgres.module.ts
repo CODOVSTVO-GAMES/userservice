@@ -6,11 +6,11 @@ import { User } from 'src/models/User';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'psqldb',
-      port: 5432,
-      username: 'keshox',
-      password: 'example',
-      database: 'userdb',
+      host: 'postgresql-ha-1694074892-pgpool.global-war.svc.cluster.local',
+      // port: 5432,
+      username: 'gw',
+      password: 'gw',
+      database: 'gw',
       entities: [User],
       synchronize: true,
       autoLoadEntities: true,
