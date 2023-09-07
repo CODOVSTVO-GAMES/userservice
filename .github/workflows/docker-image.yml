@@ -1,4 +1,4 @@
-entsname: Docker Image CI
+sname: Docker Image CI
 
 on:
   push:
