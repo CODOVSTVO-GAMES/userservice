@@ -8,7 +8,7 @@ import { User } from 'src/models/User';
       type: 'postgres',
       host: '5.63.159.205',
       port: 10001,
-      username: 'gw',
+      username: 'gwCodovstvo',
       password: 'gw',
       database: 'gw',
       entities: [User],
