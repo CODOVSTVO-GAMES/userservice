@@ -8,7 +8,7 @@ async function bootstrap() {
     app.connectMicroservice<MicroserviceOptions>({
         transport: Transport.RMQ,
         options: {
-            urls: ['amqp://gw:codovstvoUser@194.67.91.42:10003'],
+            urls: ['amqp://gw:codovstvoUser2@5.63.159.205:10003'],
             queue: 'user',
         },
     });
