@@ -6,7 +6,7 @@ import { User } from 'src/models/User';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: '194.67.91.42',
+      host: '5.63.159.205',
       port: 10001,
       username: 'gw',
       password: 'gw',
