@@ -6,11 +6,11 @@ import { User } from 'src/models/User';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: '5.63.159.205',
-      port: 10001,
-      username: 'gwCodovstvo',
-      password: 'gw',
-      database: 'gw',
+            host: '109.172.89.4',
+            port: 12121,
+            username: 'gw',
+            password: 'gw',
+            database: 'gw',
       entities: [User],
       synchronize: true,
       autoLoadEntities: true,
